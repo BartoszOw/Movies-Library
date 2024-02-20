@@ -1,32 +1,50 @@
 # Klasa Film
+
 class Movie:
 
     # Pobieranie danych
+
     def __init__(self, title, prod_date, genre):
         self.title = title
         self.prod_date = prod_date
         self.genre = genre
 
         self._views = 0
+
     # Wyswietlanie 
+        
     def __repr__(self):
         return f"{self.title} ({self.prod_date})"
+    
     # Ilosc ogladajacych
+
     def views(self):
         return self._views
+    
     # Zwiekszanie ilosci ogladajacych
+
     def play(self):
         self._views += 1
 
+
+    # Funkcja generate_views
+        
+    def generate_views(self):
+
 # podklasa Serial
+        
 class Serial(Movie):
+
     # Pobieranie danych
+
     def __init__(self, episode, season, *args, **kwargs):
         super().__init__(*args,**kwargs)
 
         self.episode = episode
         self.season = season
+
     # Wyswietlanie 
+        
     def __repr__(self):
         if self.season < 10:
             return f"{self.title} S0{self.season}E{self.episode}"
@@ -38,28 +56,41 @@ class Serial(Movie):
         
 
 # klasa Biblioteka (przechowuje w liscie dane)
+    
 class Library:
     
     def __init__(self) -> None:
         self.library = []
 
+    # Dodawanie do Biblioteki
+        
     def store(self, instance):
         self.library.append(instance)
 
+    # Wyswietlanie
+        
     def __repr__(self):
         for movie in self.library:
             print(movie.title, movie.prod_date)
         return ''
 
     def get_movies(self):
-        return [movie for movie in self.library if type(movie) == Movie]
+        by_title = sorted([movie for movie in self.library if type(movie) == Movie], key=lambda movie: movie.title)
+        return by_title
     
     def get_series(self):
-        return [serial for serial in self.library if type(serial) == Serial]
-
-
-
-
+        by_title = sorted([serial for serial in self.library if type(serial) == Serial], key=lambda serial: serial.title)
+        return by_title
+    
+    def search(self, ins):
+        self.ins = ins
+        for i in self.library:
+            if self.ins == i.title:
+                if type(i) == Movie:
+                    return f"{i.title}, {i.prod_date}, {i.genre}"
+                elif type(i) == Serial:
+                    return f"{i.title}, {i.prod_date}, {i.genre}, E{i.episode}, S{i.season}"
+        
 
 
 
@@ -83,6 +114,7 @@ serial_four = Serial(title="Lucifer", prod_date="1999", genre="Sci-fi", episode=
 serial_five = Serial(title="Bears", prod_date="1999", genre="Documental", episode=5, season=1)
 
 # Akcje Biblioteka
+
 Biblioteka.store(movie_one)
 Biblioteka.store(movie_two)
 Biblioteka.store(movie_three)
@@ -96,8 +128,17 @@ Biblioteka.store(serial_five)
 
 #print(Biblioteka)
 
+
+
+# Komendy get_movies i get_series
+
 print(Biblioteka.get_movies())
 print(Biblioteka.get_series())
+
+
+# Komenda search()
+
+print(Biblioteka.search("Meg"))
 
 
 
