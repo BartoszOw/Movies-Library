@@ -9,7 +9,7 @@ class Movie:
 
         self._views = 0
     # Wyswietlanie 
-    def __str__(self):
+    def __repr__(self):
         return f"{self.title} ({self.prod_date})"
     # Ilosc ogladajacych
     def views(self):
@@ -27,7 +27,7 @@ class Serial(Movie):
         self.episode = episode
         self.season = season
     # Wyswietlanie 
-    def __str__(self):
+    def __repr__(self):
         if self.season < 10:
             return f"{self.title} S0{self.season}E{self.episode}"
         elif self.episode < 10:
@@ -46,12 +46,16 @@ class Library:
     def store(self, instance):
         self.library.append(instance)
 
-    def __str__(self):
+    def __repr__(self):
         for movie in self.library:
             print(movie.title, movie.prod_date)
         return ''
 
-
+    def get_movies(self):
+        return [movie for movie in self.library if type(movie) == Movie]
+    
+    def get_series(self):
+        return [serial for serial in self.library if type(serial) == Serial]
 
 
 
@@ -90,12 +94,15 @@ Biblioteka.store(serial_three)
 Biblioteka.store(serial_four)
 Biblioteka.store(serial_five)
 
-print(Biblioteka)
+#print(Biblioteka)
+
+print(Biblioteka.get_movies())
+print(Biblioteka.get_series())
 
 
 
-print(movie_one)
-print(serial_one)
-movie_one.play()
-movie_one.play()
-print(movie_one.views())
+#print(movie_one)
+#print(serial_one)
+#movie_one.play()
+#movie_one.play()
+#print(movie_one.views())
