@@ -1,3 +1,5 @@
+import random
+
 # Klasa Film
 
 class Movie:
@@ -26,10 +28,7 @@ class Movie:
     def play(self):
         self._views += 1
 
-
-    # Funkcja generate_views
         
-    def generate_views(self):
 
 # podklasa Serial
         
@@ -91,10 +90,16 @@ class Library:
                 elif type(i) == Serial:
                     return f"{i.title}, {i.prod_date}, {i.genre}, E{i.episode}, S{i.season}"
         
+    def generate_views(self):
+        x = random.choice(self.library)
+        x._views = random.randrange(0,101)
+        return f"{x}, Views: {x.views()}"
 
 
-
-
+def generate_views_ten(self):
+    for i in range(10):
+        print(Library.generate_views(self))
+    return ''
 # Instancje
 
 Biblioteka = Library()
@@ -127,18 +132,18 @@ Biblioteka.store(serial_four)
 Biblioteka.store(serial_five)
 
 #print(Biblioteka)
-
-
+#print(Biblioteka.generate_views())
+print(generate_views_ten(Biblioteka))
 
 # Komendy get_movies i get_series
 
-print(Biblioteka.get_movies())
-print(Biblioteka.get_series())
+#print(Biblioteka.get_movies())
+#print(Biblioteka.get_series())
 
 
 # Komenda search()
 
-print(Biblioteka.search("Meg"))
+#print(Biblioteka.search("Meg"))
 
 
 
