@@ -1,4 +1,5 @@
 import random
+import time
 
 # Klasa Film
 
@@ -91,20 +92,33 @@ class Library:
                     return f"{i.title}, {i.prod_date}, {i.genre}, E{i.episode}, S{i.season}"
         
     def generate_views(self):
-        x = random.choice(self.library)
-        x._views = random.randrange(0,101)
-        return f"{x}, Views: {x.views()}"
+            x = random.choice(self.library)
+            x._views = random.randrange(0,101)
+            return f"{x}, Views: {x.views()}"
+    
 
+    def top_titles(self, content_type):
+        if content_type == "Movie":
+            movie_views = sorted([movie for movie in self.library if type(movie) == Movie], reverse=True, key=lambda movie: movie._views)[:3]
+            x = movie_views[:3]
+            for i, ele in enumerate(x, 1):
+                print(i, ele)
+            return ''
+        elif content_type == "Serial":
+            serial_views = sorted([serial for serial in self.library if type(serial) == Serial], reverse=True, key=lambda serial: serial._views)
+            x = serial_views[:3]
+            for i, ele in enumerate(x, 1):
+                print(i, ele)
+            return ''
 
 def generate_views_ten(self):
-    for i in range(10):
-        print(Library.generate_views(self))
-    return ''
-# Instancje
+    for i in range(0,15):
+        return Library.generate_views(self)
+    
+
+
 
 Biblioteka = Library()
-
-
 
 movie_one = Movie(title="Pulp", prod_date=2012, genre="Action")
 movie_two = Movie(title="Meg", prod_date=2000, genre="Horror")
@@ -118,37 +132,36 @@ serial_three = Serial(title="The Walking Dead", prod_date="2010", genre="Horror"
 serial_four = Serial(title="Lucifer", prod_date="1999", genre="Sci-fi", episode=15, season=3)
 serial_five = Serial(title="Bears", prod_date="1999", genre="Documental", episode=5, season=1)
 
-# Akcje Biblioteka
-
-Biblioteka.store(movie_one)
-Biblioteka.store(movie_two)
-Biblioteka.store(movie_three)
-Biblioteka.store(movie_four)
-Biblioteka.store(movie_five)
-Biblioteka.store(serial_one)
-Biblioteka.store(serial_two)
-Biblioteka.store(serial_three)
-Biblioteka.store(serial_four)
-Biblioteka.store(serial_five)
-
-#print(Biblioteka)
-#print(Biblioteka.generate_views())
-print(generate_views_ten(Biblioteka))
-
-# Komendy get_movies i get_series
-
-#print(Biblioteka.get_movies())
-#print(Biblioteka.get_series())
-
-
-# Komenda search()
-
-#print(Biblioteka.search("Meg"))
 
 
 
-#print(movie_one)
-#print(serial_one)
-#movie_one.play()
-#movie_one.play()
-#print(movie_one.views())
+def main():
+    print("Biblioteka Filmów")
+    print("----------------")
+    Biblioteka.store(movie_one)
+    Biblioteka.store(movie_two)
+    Biblioteka.store(movie_three)
+    Biblioteka.store(movie_four)
+    Biblioteka.store(movie_five)
+    Biblioteka.store(serial_one)
+    Biblioteka.store(serial_two)
+    Biblioteka.store(serial_three)
+    Biblioteka.store(serial_four)
+    Biblioteka.store(serial_five)
+    
+    generate_views_ten(Biblioteka)
+
+    print(f"Najpopularniejsze filmy i seriale dnia {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())}")
+    print("-------------")
+    print("Filmy")
+    print("-------------")
+    print(Biblioteka.top_titles("Movie"))
+    print("-------------")
+    print("Seriale")
+    print("-------------")
+    print(Biblioteka.top_titles("Serial"))
+
+
+
+if __name__ == '__main__':
+    main()
